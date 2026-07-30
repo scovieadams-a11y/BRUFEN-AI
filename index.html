@@ -54,7 +54,7 @@
     <!-- ① Live Market Trends & Eye-Catching AI Scanner -->
     <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 25px; border-radius: 4px; background-color: #fafafa;">
         <h2 style="color: blue; font-family: 'Times New Roman', Times, serif; margin-top: 0; font-size: 18px;">① LIVE MARKET TRENDS & AI SCANNER</h2>
-        <p style="font-size: 13px; margin-bottom: 12px;">Choose your asset class parameters and timeframe to populate automated Buy/Sell signals.</p>
+        <p style="font-size: 13px; margin-bottom: 12px;">Choose your asset class parameters and timeframe to populate automated Buy/Sell signals with structural entries and exits.</p>
         
         <!-- Controls Grid -->
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 15px;">
@@ -84,7 +84,7 @@
         </div>
 
         <!-- Eye-Catching Monitor Box -->
-        <div id="scanner-display" style="background-color: #000; color: #fff; border: 1px solid #333; padding: 15px; font-family: monospace; font-size: 12px; border-radius: 4px; min-height: 80px; box-shadow: inset 0 0 8px rgba(255,255,255,0.1);">
+        <div id="scanner-display" style="background-color: #000; color: #fff; border: 1px solid #333; padding: 15px; font-family: monospace; font-size: 12px; border-radius: 4px; min-height: 110px; box-shadow: inset 0 0 8px rgba(255,255,255,0.1); line-height: 1.5;">
             <span style="color: #888;">// System standing by. Configure assets and select Scan Market...</span>
         </div>
     </div>
@@ -92,50 +92,54 @@
     <!-- ② Investment Chatters -->
     <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 25px; border-radius: 4px;">
         <h2 style="color: blue; font-family: 'Times New Roman', Times, serif; margin-top: 0; font-size: 18px;">② INVESTMENT CHATTERS</h2>
-        <p style="font-size: 13px; margin-bottom: 15px;">Review our custom investment portfolios. Minimum required baseline capital allocation: <strong>$500</strong>.</p>
+        <p style="font-size: 13px; margin-bottom: 15px;">Review our portfolios. Select a box to lock in that exact required entry capital allocation.</p>
         
         <!-- Individual Selection Tiers Grid -->
         <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
-            <div onclick="selectTier('tier1', 7)" id="box-tier1" style="border: 2px solid blue; padding: 12px; border-radius: 4px; cursor: pointer; background: #fdfdfd;">
-                <strong style="color: blue; font-size: 14px;">Tier 1: Precision Alpha Starter</strong>
+            <div onclick="selectTier('tier1', 7, 500)" id="box-tier1" style="border: 2px solid blue; padding: 12px; border-radius: 4px; cursor: pointer; background: #fdfdfd;">
+                <strong style="color: blue; font-size: 14px;">Tier 1: Precision Alpha Starter — Entry: $500</strong>
                 <div style="font-size: 12px; margin-top: 3px; color: #333;">Return window allocation structure settles in full over a <strong>7 Days</strong> period. Daily yield distributions compounded natively.</div>
             </div>
-            <div onclick="selectTier('tier2', 14)" id="box-tier2" style="border: 1px solid #ccc; padding: 12px; border-radius: 4px; cursor: pointer; background: #fff;">
-                <strong style="color: #333; font-size: 14px;">Tier 2: Core Strategy Engine</strong>
+            <div onclick="selectTier('tier2', 14, 1000)" id="box-tier2" style="border: 1px solid #ccc; padding: 12px; border-radius: 4px; cursor: pointer; background: #fff;">
+                <strong style="color: #333; font-size: 14px;">Tier 2: Core Strategy Engine — Entry: $1,000</strong>
                 <div style="font-size: 12px; margin-top: 3px; color: #555;">Return window allocation structure settles in full over a <strong>14 Days</strong> period. Scaled infrastructure positioning.</div>
             </div>
-            <div onclick="selectTier('tier3', 21)" id="box-tier3" style="border: 1px solid #ccc; padding: 12px; border-radius: 4px; cursor: pointer; background: #fff;">
-                <strong style="color: #333; font-size: 14px;">Tier 3: Momentum Capital Booster</strong>
+            <div onclick="selectTier('tier3', 21, 2500)" id="box-tier3" style="border: 1px solid #ccc; padding: 12px; border-radius: 4px; cursor: pointer; background: #fff;">
+                <strong style="color: #333; font-size: 14px;">Tier 3: Momentum Capital Booster — Entry: $2,500</strong>
                 <div style="font-size: 12px; margin-top: 3px; color: #555;">Return window allocation structure settles in full over a <strong>21 Days</strong> period. Deep liquidity buffering activated.</div>
             </div>
-            <div onclick="selectTier('tier4', 28)" id="box-tier4" style="border: 1px solid #ccc; padding: 12px; border-radius: 4px; cursor: pointer; background: #fff;">
-                <strong style="color: #333; font-size: 14px;">Tier 4: Liquidity Surge Protocol</strong>
+            <div onclick="selectTier('tier4', 28, 5000)" id="box-tier4" style="border: 1px solid #ccc; padding: 12px; border-radius: 4px; cursor: pointer; background: #fff;">
+                <strong style="color: #333; font-size: 14px;">Tier 4: Liquidity Surge Protocol — Entry: $5,000</strong>
                 <div style="font-size: 12px; margin-top: 3px; color: #555;">Return window allocation structure settles in full over a <strong>28 Days</strong> period. Professional enterprise market metrics.</div>
             </div>
-            <div onclick="selectTier('tier5', 35)" id="box-tier5" style="border: 1px solid #ccc; padding: 12px; border-radius: 4px; cursor: pointer; background: #fff;">
-                <strong style="color: #333; font-size: 14px;">Tier 5: Institutional Vault Master</strong>
+            <div onclick="selectTier('tier5', 35, 10000)" id="box-tier5" style="border: 1px solid #ccc; padding: 12px; border-radius: 4px; cursor: pointer; background: #fff;">
+                <strong style="color: #333; font-size: 14px;">Tier 5: Institutional Vault Master — Entry: $10,000</strong>
                 <div style="font-size: 12px; margin-top: 3px; color: #555;">Return window allocation structure settles in full over a <strong>35 Days</strong> period. Maximum systemic shielding parameters.</div>
             </div>
         </div>
 
-        <!-- Hidden Tracking Inputs for Dynamic Calculations -->
+        <!-- Hidden Tracking Inputs & Strict Static Values Dashboard -->
         <input type="hidden" id="selected-tier-id" value="tier1">
+        <input type="hidden" id="expected-tier-amount" value="500">
+        
         <div style="background-color: #f9f9f9; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; margin-bottom: 15px;">
             <label style="font-weight: bold; display: block; margin-bottom: 4px;">Deposit Funding Amount ($):</label>
-            <input type="number" id="deposit-amount" value="500" min="500" oninput="runLiveCalculation()" style="width: 95%; padding: 6px; font-size: 13px; border: 1px solid black;">
+            <!-- Field locked strictly to selected tier target amount -->
+            <input type="number" id="deposit-amount" value="500" oninput="validateStrictAmount()" style="width: 95%; padding: 6px; font-size: 13px; border: 1px solid black; background-color: #eee;">
+            <span id="amount-warning" style="font-size: 11px; color: red; display: none; margin-top: 2px;">Only the precise required tier amount is acceptable.</span>
             
             <div style="background: white; border: 1px dashed green; padding: 10px; margin-top: 10px; border-radius: 4px;">
-                <div style="font-weight: bold; color: green;" id="maturity-output">Projected Return Window: 7 Days</div>
+                <div style="font-weight: bold; color: green;" id="maturity-output">Projected Return Window: 7 Days Framework</div>
                 <div style="font-size: 11px; color: #666; margin-top: 2px;">[No Loss Framework Active & Guarding Capital Structure]</div>
             </div>
         </div>
 
-        <!-- Interactive Automated Lipa Na M-Pesa API Prompt Node -->
-        <div style="background-color: #fff; border: 1px solid #ccc; padding: 12px; border-radius: 4px; font-size: 13px;">
-            <span style="font-weight: bold; color: #333; display: block; margin-bottom: 8px;">💳 Secure Direct Checkout Gateway</span>
+        <!-- STK Push Section Just Below Trade Allocation -->
+        <div style="background-color: #fff; border: 2px solid #25d366; padding: 12px; border-radius: 4px; font-size: 13px;">
+            <span style="font-weight: bold; color: #333; display: block; margin-bottom: 8px;">💸 Trade Infrastructure Checkout Gateway</span>
             <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
-                <input type="tel" id="phone-number" placeholder="Enter phone number (e.g., 0748299501)" style="flex: 1; min-width: 180px; padding: 6px; border: 1px solid black; font-size: 13px;">
-                <button onclick="triggerStkPush()" style="background: #25d366; color: white; font-weight: bold; border: none; padding: 6px 14px; cursor: pointer; border-radius: 4px; font-size: 13px;">
+                <input type="tel" id="phone-number-trade" placeholder="Enter Safaricom number (e.g., 0748299501)" style="flex: 1; min-width: 180px; padding: 6px; border: 1px solid black; font-size: 13px;">
+                <button onclick="triggerStkPush('trade')" style="background: #25d366; color: white; font-weight: bold; border: none; padding: 6px 14px; cursor: pointer; border-radius: 4px; font-size: 13px;">
                     Send STK Push
                 </button>
             </div>
@@ -145,7 +149,7 @@
         </div>
     </div>
 
-    <!-- ③ Automated Bots & Broker Portal Linkage with Active Tracking IDs -->
+    <!-- ③ Automated Bots & Broker Portal Linkage -->
     <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 25px; border-radius: 4px;">
         <h2 style="color: blue; font-family: 'Times New Roman', Times, serif; margin-top: 0; font-size: 18px;">③ AUTOMATED BOTS & BROKER CHANNELS</h2>
         <p style="font-size: 13px;">Deploy production-level extraction scripts or connect direct execution nodes to tracking portals.</p>
@@ -161,21 +165,37 @@
     </div>
 
     <!-- ④ Academy Strategy Store & DRM Shielding -->
-    <div style="border: 1px solid #ccc; padding: 15px; border-radius: 4px; background-color: #fafafa;">
+    <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 25px; border-radius: 4px; background-color: #fafafa;">
         <h2 style="color: blue; font-family: 'Times New Roman', Times, serif; margin-top: 0; font-size: 18px;">④ ACADEMY STORE & RESOURCE VAULT</h2>
         <p style="font-size: 13px; margin-bottom: 12px;">Purchase technical manuals or secure online class registrations instantly.</p>
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 15px;">
             <div style="background: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 4px; text-align: center;">
                 <strong style="font-size: 13px; display: block;">Premium Strategy Blueprint (PDF)</strong>
                 <span style="font-size: 12px; color: green; font-weight: bold; display: block; margin: 4px 0;">KES 2,500</span>
-                <button onclick="alert('Complete purchase via the Paybill terminal to unlock secure file viewing.')" style="background: white; border: 1px solid black; font-size: 11px; padding: 4px 8px; cursor: pointer;">Purchase Manual</button>
+                <button onclick="selectAcademyItem('Premium Strategy Blueprint', 2500)" style="background: white; border: 1px solid black; font-size: 11px; padding: 4px 8px; cursor: pointer;">Select Manual</button>
             </div>
             <div style="background: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 4px; text-align: center;">
                 <strong style="font-size: 13px; display: block;">Advanced Class Registration</strong>
                 <span style="font-size: 12px; color: green; font-weight: bold; display: block; margin: 4px 0;">KES 4,000</span>
-                <button onclick="alert('Complete purchase via the Paybill terminal to generate virtual class tokens.')" style="background: white; border: 1px solid black; font-size: 11px; padding: 4px 8px; cursor: pointer;">Register Online</button>
+                <button onclick="selectAcademyItem('Advanced Class Registration', 4000)" style="background: white; border: 1px solid black; font-size: 11px; padding: 4px 8px; cursor: pointer;">Select Registration</button>
             </div>
+        </div>
+
+        <!-- STK Push Section Just Below Academy Purchases -->
+        <div style="background-color: #fff; border: 2px solid #00f; padding: 12px; border-radius: 4px; font-size: 13px;">
+            <span style="font-weight: bold; color: #333; display: block; margin-bottom: 4px;">💳 Academy Resource Checkout Gateway</span>
+            <div style="font-size: 12px; color: blue; font-weight: bold; margin-bottom: 8px;" id="academy-item-display">Selected: None</div>
+            
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
+                <input type="tel" id="phone-number-academy" placeholder="Enter Safaricom number (e.g., 0748299501)" style="flex: 1; min-width: 180px; padding: 6px; border: 1px solid black; font-size: 13px;">
+                <button onclick="triggerStkPush('academy')" style="background: blue; color: white; font-weight: bold; border: none; padding: 6px 14px; cursor: pointer; border-radius: 4px; font-size: 13px;">
+                    Send STK Push
+                </button>
+            </div>
+            <p style="font-size: 11px; color: #666; margin: 0;">
+                Processing Routes: Paybill <strong>247247</strong> | Account Number: <strong>0190187302651</strong>.
+            </p>
         </div>
 
         <div style="margin-top: 15px; border-top: 1px solid #ccc; padding-top: 10px; font-size: 11px; text-align: center; color: #555;">
@@ -183,8 +203,39 @@
         </div>
     </div>
 
+    <!-- Administrative Restricted Authentication Portal -->
+    <div style="border: 2px dashed red; padding: 15px; border-radius: 4px; background-color: #fff5f5; margin-top: 40px;">
+        <h3 style="color: red; margin-top: 0; font-size: 15px; font-family: monospace;">🔒 SECURE SYSTEM ADMINISTRATION PORTAL</h3>
+        
+        <div id="admin-login-node">
+            <p style="font-size: 12px; margin-bottom: 10px;">Authorized operator validation required to gain system infrastructure rights.</p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <input type="password" id="admin-pass-key" placeholder="Enter Secret Admin Passkey" style="padding: 6px; border: 1px solid red; font-size: 13px; flex: 1; min-width: 200px;">
+                <button onclick="authenticateAdminSystem()" style="background: red; color: white; font-weight: bold; border: none; padding: 6px 14px; cursor: pointer; font-size: 13px; border-radius: 4px;">
+                    Login to System
+                </button>
+            </div>
+        </div>
+
+        <div id="admin-dashboard-node" style="display: none;">
+            <div style="background: green; color: white; padding: 6px 10px; font-weight: bold; font-size: 12px; border-radius: 4px; margin-bottom: 12px; display: inline-block;">
+                ✔ System Core Access Granted: Master Admin Active
+            </div>
+            <div style="background: white; border: 1px solid #ccc; padding: 10px; font-family: monospace; font-size: 12px;">
+                <strong>System Control Parameters:</strong><br>
+                • Database Nodes: Connected Successfully<br>
+                • STK Push Terminal: Operational via Route 247247<br>
+                • DRM Shield Modules: Armed & Monitoring Canvas Operations
+            </div>
+        </div>
+    </div>
+
     <!-- Scripting Infrastructure Engines -->
     <script>
+        let selectedAcademyPrice = 0;
+        let selectedAcademyName = "";
+
+        // AI Scanner Output Generator with Dynamic Entry & Exit numbers
         function runAiScanner() {
             const asset = document.getElementById('scanner-asset').value;
             const timeframe = document.getElementById('scanner-timeframe').value;
@@ -195,72 +246,6 @@
             
             setTimeout(() => {
                 display.style.color = "#00ff00";
-                let signal = Math.random() > 0.5 ? "BUY" : "SELL";
-                let targetAsset = asset === "deriv" ? "Volatility 75 Index" : asset === "forex" ? "EURUSD" : asset === "crypto" ? "BTCUSD" : "XAUUSD (Gold)";
-                
-                display.innerHTML = "[✔] PLATFORM SCAN COMPLETED SUCCESSFULLY<br>" +
-                                    "• ASSET TYPE: " + targetAsset + "<br>" +
-                                    "• TIMEFRAME PARAMETER: " + timeframe + "<br>" +
-                                    "• STRATEGIC ANALYSIS SIGNAL: <span style='background:green; color:white; padding:1px 4px; font-weight:bold;'>" + signal + "</span><br>" +
-                                    "• ENTRY ZONE MATRIX: Confirmed at Structure Shift Point.";
-            }, 1500);
-        }
-
-        function selectTier(tierId, days) {
-            for(let i=1; i<=5; i++) {
-                let box = document.getElementById('box-tier' + i);
-                box.style.border = "1px solid #ccc";
-                box.getElementsByTagName('strong')[0].style.color = "#333";
-            }
-            let selectedBox = document.getElementById('box-' + tierId);
-            selectedBox.style.border = "2px solid blue";
-            selectedBox.getElementsByTagName('strong')[0].style.color = "blue";
-            
-            document.getElementById('selected-tier-id').value = tierId;
-            runLiveCalculation();
-        }
-
-        function runLiveCalculation() {
-            const tierId = document.getElementById('selected-tier-id').value;
-            const amount = document.getElementById('deposit-amount').value;
-            const output = document.getElementById('maturity-output');
-            
-            if(parseInt(amount) < 500 || isNaN(amount)) {
-                output.style.color = "red";
-                output.innerHTML = "Error: Allocation must fulfill the minimum requirement ($500).";
-                return;
-            }
-            
-            output.style.color = "green";
-            let days = tierId === "tier1" ? 7 : tierId === "tier2" ? 14 : tierId === "tier3" ? 21 : tierId === "tier4" ? 28 : 35;
-            output.innerHTML = "Projected Return Window: " + days + " Days Allocation Framework Enabled";
-        }
-
-        function triggerStkPush() {
-            const phone = document.getElementById('phone-number').value.trim();
-            const amount = document.getElementById('deposit-amount').value;
-            
-            if(!phone) {
-                alert("Please fill in a valid phone number to execute checkout operations.");
-                return;
-            }
-            if(parseInt(amount) < 500) {
-                alert("Verify funding allocation parameters meet criteria ($500).");
-                return;
-            }
-            alert("STK Push Requested Successfully!\nSending secure validation message to client terminal for checkout confirmation.");
-        }
-
-        function triggerWithdrawalPrompt() {
-            let userWallet = prompt("Enter your account routing target (e.g., M-Pesa Number or Crypto Wallet Address):");
-            if(userWallet) {
-                let amount = prompt("Specify settlement withdrawal amount ($):");
-                if(amount) {
-                    alert("Settlement request logged successfully.\nProcessing payout queue toward target address.");
-                }
-            }
-        }
-    </script>
-</body>
-                  </html>
-
+                let isBuy = Math.random() > 0.5;
+                let signal = isBuy ? "BUY" : "SELL";
+                let targetAsset = asset === "deriv" ? "Volatility 75 Index" : asset === "forex" ? "EURUSD" : asset === "crypto" ? "BTCUSD" : "XAUUSD (Gol
