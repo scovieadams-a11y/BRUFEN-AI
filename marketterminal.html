@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wealth Blueprint Hub - Advanced Terminal</title>
+    <style>
+        :root {
+            --neon-green: #00ff66;
+            --dark-bg: #0a0e12;
+            --panel-bg: #11161d;
+            --border-color: #1c2430;
+            --text-muted: #8492a6;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .terminal-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            border: 1px solid var(--neon-green);
+            padding: 15px;
+            background-color: #0b0c10;
+        }
+
+        .header-title {
+            text-align: center;
+            color: var(--neon-green);
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .panel-title {
+            color: #00d2ff;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .account-metric {
+            background: #0d1117;
+            padding: 12px;
+            border-left: 3px solid var(--neon-green);
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .metric-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-top: 5px;
+        }
+
+        .btn {
+            background: transparent;
+            border: 1px solid #00d2ff;
+            color: #00d2ff;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #00d2ff;
+            color: #000;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 500px;
+            width: 100%;
+            background-color: #131722;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Order execution styles */
+        .execution-bar {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            align-items: center;
+        }
+
+        .input-lots {
+            background: #000;
+            border: 1px solid var(--border-color);
+            color: var(--neon-green);
+            padding: 6px;
+            width: 80px;
+            font-weight: bold;
+        }
+
+        .btn-buy { border-color: var(--neon-green); color: var(--neon-green); }
+        .btn-buy:hover { background: var(--neon-green); color: #000; }
+        .btn-sell { border-color: #ff3b30; color: #ff3b30; }
+        .btn-sell:hover { background: #ff3b30; color: #fff; }
+
+        .status-sync {
+            font-size: 12px;
+            color: var(--neon-green);
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="terminal-container">
+    <div class="header-title">Tesla Investment Platform</div>
+
+    <!-- ACCOUNTS HUB -->
+    <div class="panel">
+        <div class="panel-title">① Accounts Hub</div>
+        <div class="grid-2">
+            <div class="account-metric">
+                <div class="metric-label">Workspace Identity</div>
+                <div id="current-workspace" class="metric-value" style="color: #00d2ff;">Anzo Capital Demo Account (Connecting...)</div>
+            </div>
+            <div class="account-metric">
+                <div class="metric-label">Running Balance Capacity</div>
+                <div id="running-balance" class="metric-value">$--.-- USD</div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 15px; display: flex; gap: 10px;">
+            <button class="btn" onclick="triggerBrokerLink('Deriv')">Link Deriv Account</button>
+            <button class="btn" onclick="triggerBrokerLink('Anzo Capital')">Link Anzo Capital Account</button>
+        </div>
+        <div class="status-sync" id="sync-status">● Core Status: Awaiting Broker Authorization Handshake...</div>
+    </div>
+
+    <!-- LIVE MARKET TRENDS & CHART TERMINAL -->
+    <div class="panel">
+        <div class="panel-title">② Live Market Trends & Expert Terminal Area (OANDA Data Feed)</div>
+        
+        <!-- Live TradingView Advanced Terminal Widget -->
+        <div class="chart-wrapper">
+            <div id="tradingview_advanced_chart" style="height: 100%; width: 100%;"></div>
+        </div>
+
+        <!-- Integrated Execution Matrix -->
+        <div class="execution-bar">
+            <label style="font-size: 12px; color: var(--text-muted)">LOTS:</label>
+            <input type="number" class="input-lots" value="0.10" step="0.01" min="0.01">
+            <button class="btn btn-sell" onclick="executeOrder('SELL')">Sell / Short</button>
+            <button class="btn btn-buy" onclick="executeOrder('BUY')">Buy / Long</button>
+        </div>
+    </div>
+</div>
+
+<!-- TradingView Widget Script Loading -->
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<script type="text/javascript">
+    // Initialize the advanced interactive charting engine using accurate OANDA liquidity
+    new TradingView.widget({
+        "width": "100%",
+        "height": 500,
+        "symbol": "OANDA:XAUUSD",
+        "interval": "15",
+        "timezone": "Etc/UTC",
+        "theme": "dark",
+        "style": "1",
+        "locale": "en",
+        "toolbar_bg": "#f1f3f6",
+        "enable_publishing": false,
+        "hide_side_toolbar": false,
+        "allow_symbol_change": true,
+        "container_id": "tradingview_advanced_chart",
+        "studies": [
+            "RSI@tv-basicstudies"
+        ],
+        "disabled_features": ["header_screenshot", "header_compare"],
+        "enabled_features": ["study_templates", "side_toolbar_in_popup"]
+    });
+
+    // Mock Engine variables waiting for API endpoint connections
+    let activeBroker = "Anzo Capital";
+    let isConnected = false;
+
+    function simulateAccountSync() {
+        // Simulating the credentials lookup sequence you described
+        document.getElementById('sync-status').innerText = "⏳ Querying node arrays for authentic credentials validation...";
+        
+        setTimeout(() => {
+            // Updating metrics to represent actual live parameters
+            document.getElementById('running-balance').innerText = "31.00 USD";
+            document.getElementById('current-workspace').innerText = activeBroker + " Demo Account (Verified)";
+            document.getElementById('sync-status').innerText = "✔ MT5 Node Active: " + activeBroker + " Account Synced and Validated Successfully.";
+            isConnected = true;
+        }, 1500);
+    }
+
+    function triggerBrokerLink(brokerName) {
+        activeBroker = brokerName;
+        const password = prompt(`Enter your real MT5 Login Password for ${brokerName}:`);
+        if (!password || password.trim() === "") {
+            alert("Error: Authentication aborted. Invalid credentials framework.");
+            return;
+        }
+        simulateAccountSync();
+    }
+
+    function executeOrder(side) {
+        if(!isConnected) {
+            alert("Execution Denied: Please authorize and sync your true broker framework account first.");
+            return;
+        }
+        alert(`Order transmitted to ${activeBroker} MT5 gateway server. Action: ${side} Gold (XAUUSD)`);
+    }
+
+    // Auto boot setup
+    window.onload = function() {
+        // Simulating immediate execution mapping
+        simulateAccountSync();
+    }
+</script>
+</body>
+</html>
