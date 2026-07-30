@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Premium Ventures Platform</title>
+</head>
+<body style="background-color: #0a0f0d; color: #e0e6e3; font-family: sans-serif; line-height: 1.6; margin: 0; padding: 10px;">
+
+    <!-- Top Navigation & Global Header -->
+    <div style="border-bottom: 2px solid #1b4d3e; padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+        <span style="color: #25d366; font-family: 'Chicago', 'Arial Black', sans-serif; font-size: 22px; font-weight: bold; line-height: 1.1;">Wealth<br>Blueprint<br>Hub</span>
+        
+        <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+            <div style="font-family: 'Times New Roman', Times, serif; color: #52a3ff; font-size: 15px; font-weight: bold; display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end;">
+                <span>AI Scanner</span> <span>Chatters</span>
+                <span>Bots</span> <span>Forex Portal</span>
+                <span>Academy</span>
+            </div>
+            <button onclick="triggerWithdrawalPrompt()" style="background-color: transparent; border: 2px solid #ff4d4d; color: #ff4d4d; font-weight: bold; padding: 4px 10px; font-size: 12px; cursor: pointer; border-radius: 4px;">
+                💱 Request Withdrawal
+            </button>
+        </div>
+    </div>
+
+    <h1 style="color: #25d366; font-family: 'Chicago', 'Arial Black', sans-serif; text-align: center; font-size: 26px; margin: 20px 0 30px 0;">
+        THE PREMIUM VENTURES PLATFORM
+    </h1>
+
+    <!-- Updated Accounts Hub with Dropdown Navigation Menu & Permission Linking -->
+    <div style="border: 2px solid #1b4d3e; padding: 15px; margin-bottom: 25px; border-radius: 6px; background-color: #111a16;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1b4d3e; padding-bottom: 8px; margin-bottom: 12px;">
+            <span style="font-weight: bold; font-size: 14px; color: #25d366;">📈 ACCOUNTS HUB</span>
+            <div>
+                <label for="account-selector" style="font-size: 12px; color: #a3b8ad; margin-right: 5px;">Active Workspace:</label>
+                <select id="account-selector" onchange="switchAccountWorkspace()" style="background: #0d1411; color: #25d366; border: 1px solid #1b4d3e; padding: 4px; font-family: monospace; font-weight: bold; font-size: 13px;">
+                    <option value="local-demo">Local Demo Account (Default)</option>
+                    <option value="deriv-demo">Deriv Demo Account</option>
+                    <option value="deriv-live">Deriv Live Account</option>
+                    <option value="anzo-demo">Anzo Capital Demo Account</option>
+                    <option value="anzo-live">Anzo Capital Live Account</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Account Metrics Matrix Dynamic Displays -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 15px;">
+            <div style="background-color: #0d1411; padding: 8px; border-radius: 4px; border: 1px solid #1b4d3e;">
+                <span style="font-size: 11px; color: #a3b8ad; display: block;">WORKSPACE IDENTITY</span>
+                <span id="display-workspace-name" style="font-weight: bold; font-family: monospace; color: #52a3ff;">Local Demo Account</span>
+            </div>
+            <div style="background-color: #0d1411; padding: 8px; border-radius: 4px; border: 1px solid #1b4d3e;">
+                <span style="font-size: 11px; color: #a3b8ad; display: block;">RUNNING BALANCE CAPACITY</span>
+                <span id="display-workspace-balance" style="font-weight: bold; font-family: monospace; color: #25d366;">10,000.00 KES</span>
+            </div>
+        </div>
+
+        <!-- Link Broker Account with Authorization Modals Context -->
+        <div style="border-top: 1px dashed #1b4d3e; padding-top: 12px;">
+            <span style="font-size: 12px; font-weight: bold; color: #e0e6e3; display: block; margin-bottom: 8px;">🔗 Establish External Broker O-Auth Integration Links:</span>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button onclick="openLinkAuthModal('Deriv')" style="background-color: transparent; border: 1px solid #52a3ff; color: #52a3ff; font-family: monospace; font-size: 12px; padding: 6px 12px; border-radius: 4px; cursor: pointer;">
+                    Link Deriv Account
+                </button>
+                <button onclick="openLinkAuthModal('Anzo Capital')" style="background-color: transparent; border: 1px solid #52a3ff; color: #52a3ff; font-family: monospace; font-size: 12px; padding: 6px 12px; border-radius: 4px; cursor: pointer;">
+                    Link Anzo Capital Account
+                </button>
+            </div>
+            <div id="broker-permission-status" style="margin-top: 8px; font-size: 11px; color: #a3b8ad; font-family: monospace;">
+                Status: Running isolated localized testing sandboxes natively.
+            </div>
+        </div>
+    </div>
+
+    <!-- Broker Permission Authorization Overlay Form (Dynamic Modal) -->
+    <div id="auth-modal-node" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,8,7,0.9); z-index: 9999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box;">
+        <div style="background: #111a16; border: 2px solid #52a3ff; max-width: 420px; width: 100%; padding: 20px; border-radius: 6px; box-shadow: 0 0 15px rgba(82,163,255,0.3);">
+            <h3 style="color: #52a3ff; margin-top: 0; font-family: monospace;" id="auth-modal-title">API ACCESS PERMISSION REQUEST</h3>
+            <p style="font-size: 12px; color: #a3b8ad; margin-bottom: 15px;">
+                This action grants this platform explicit secure proxy transmission permissions to execute trades, pull balance calculations, and monitor position streams on your registered account.
+            </p>
+            <div style="margin-bottom: 12px;">
+                <label style="font-size: 11px; display: block; margin-bottom: 4px; color: #e0e6e3;">Broker Profile Email Address:</label>
+                <input type="email" id="auth-broker-email" placeholder="example@domain.com" style="width: 100%; padding: 6px; background: #0d1411; border: 1px solid #1b4d3e; color: #e0e6e3; box-sizing: border-box;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="font-size: 11px; display: block; margin-bottom: 4px; color: #e0e6e3;">Secure API Password Token:</label>
+                <input type="password" id="auth-broker-pass" placeholder="••••••••" style="width: 100%; padding: 6px; background: #0d1411; border: 1px solid #1b4d3e; color: #e0e6e3; box-sizing: border-box;">
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button onclick="closeAuthModal()" style="background: transparent; border: 1px solid #ff4d4d; color: #ff4d4d; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">Cancel</button>
+                <button onclick="submitAuthIntegration()" style="background: #52a3ff; color: #0a0f0d; border: none; font-weight: bold; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">Authorize & Link</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ① Live Market Trends & Terminal Interface Area -->
+    <div style="border: 1px solid #1b4d3e; padding: 15px; margin-bottom: 25px; border-radius: 4px; background-color: #111a16;">
+        <h2 style="color: #52a3ff; font-family: 'Times New Roman', Times, serif; margin-top: 0; font-size: 18px;">① LIVE MARKET TRENDS & EXPERT TERMINAL AREA</h2>
+        
+        <!-- Controls Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 15px;">
+            <div>
+                <label style="font-size: 12px; font-weight: bold; display: block; margin-bottom: 3px; color: #e0e6e3;">Asset Category:</label>
+                <select id="scanner-asset" onchange="syncTerminalAsset()" style="width: 100%; padding: 5px; font-size: 13px; border: 1px solid #1b4d3e; background: #0d1411; color: #e0e6e3;">
+                    <option value="deriv">Synthetic (Deriv Volatilities)</option>
+                    <option value="forex">Forex (Currency Pairs)</option>
+                    <option value="crypto">Crypto (BTC & Altcoins)</option>
+                    <option value="metals">Metals (XAUUSD Gold)</option>
+                </select>
+            </div>
+            <div>
+                <label style="font-size: 12px; font-weight: bold; display: block; margin-bottom: 3px; color: #e0e6e3;">Timeframe:</label>
+                <select id="scanner-timeframe" style="width: 100%; padding: 5px; font-size: 13px; border: 1px solid #1b4d3e; background: #0d1411; color: #e0e6e3;">
+                    <option value="M15">M15 (Scalping)</option>
+                    <option value="H1">H1 (Intraday)</option>
+                    <option value="H4">H4 (Swing)</option>
+                    <option value="D1">D1 (Macro)</option>
+                </select>
+            </div>
+            <div style="display: flex; align-items: flex-end;">
+                <button onclick="runAiScanner()" style="background-color: transparent; border: 2px solid #25d366; color: #25d366; font-weight: bold; padding: 6px 12px; cursor: pointer; font-size: 13px; border-radius: 4px; width: 100%;">
+                    Scan Market
+                </button>
+            </div>
+        </div>
+
+        <!-- Eye-Catching Monitor Box Coordinates Display -->
+        <div id="scanner-display" style="background-color: #050807; color: #25d366; border: 1px solid #1b4d3e; padding: 15px; font-family: monospace; font-size: 12px; border-radius: 4px; min-height: 100px; box-shadow: inset 0 0 8px rgba(0,0,0,0.8); line-height: 1.5; margin-bottom: 15px;">
+            <span style="color: #668073;">// System standing by. Interactive matrices auto-generate upon choosing Scan Market...</span>
+        </div>
+
+        <!-- Interactive Real-Time Candlestick Canvas & Bar Visualization -->
+        <div style="border: 1px solid #1b4d3e; background: #050807; padding: 10px; border-radius: 4px; margin-bottom: 15px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span id="chart-title-asset" style="font-size: 12px; font-family: monospace; color: #52a3ff; font-weight: bold;">CHART FEED: Volatility 75 Index (H1)</span>
+                <span style="font-size: 11px; font-family: monospace; color: #25d366;">● LIVE STREAMED DATA FEED</span>
+            </div>
+            
+            <!-- Structural Render Grid acting as the CSS Graphic Candlestick Chart Display -->
+            <div style="height: 140px; border-bottom: 1px solid #1b4d3e; position: relative; display: flex; align-items: flex-end; justify-content: space-around; padding: 0 10px; background: linear-gradient(to bottom, #070f0b 0%, #050807 100%);">
+                <!-- Grid Horizontal Tracking Guide Lines -->
+                <div style="position: absolute; width: 100%; top: 25%; border-top: 1px dotted rgba(27,77,62,0.3);"></div>
+                <div style="position: absolute; width: 100%; top: 50%; border-top: 1px dotted rgba(27,77,62,0.3);"></div>
+                <div style="position: absolute; width: 100%; top: 75%; border-top: 1px dotted rgba(27,77,62,0.3);"></div>
+                
+                <!-- Candlestick 1 -->
+                <div style="width: 14px; position: relative; height: 70px; margin-bottom: 20px; display: flex; flex-direction: column; align-items: center;">
+                    <div style="width: 1px; height: 15px; background: #25d366;"></div>
+                    <div style="width: 100%; flex-grow: 1; background: #25d366; border-radius: 1px;"></div>
+                    <div style="width: 1px; height: 20px; background: #25d366;"></div>
+                </div>
+                <!-- Candlestick 2 -->
+                <div style="width: 14px; position: relative; height: 90px; margin-bottom: 35px; display: flex; flex-direction: column; align-items: center;">
+                    <div style="width: 1px; height: 10px; background: #ff4d4d;"></div>
+                    <div style="width: 100%; flex-grow: 1; background: #ff4d4d; border-radius: 1px;"></div>
+                    <div style="width: 1px; height: 15px; background: #ff4d4d;"></div>
+                </div>
+                <!-- Candlestick 3 -->
+                <div style="width: 14px; position: relative; height: 50px; margin-bottom: 15px; display: flex; flex-direction: column; align-items: center;">
+                    <div style="width: 1px; height: 25px; background: #25d366;"></div>
+                    <div style="width: 100%; flex-grow: 1; background: #25d366; border-radius: 1px;"></div>
+                    <div style="width: 1px; height: 10px; background: #25d366;"></div>
+                </div>
+                <!-- Candlestick 4 -->
+                <div style="width: 14px; position: relative; height: 85px; margin-bottom: 10px; display: flex; flex-direction: column; align-items: center;">
+                    <div style="width: 1px; height: 12px; background: #25d366;"></div>
+                    <div style="width: 100%; flex-grow: 1; background: #25d366; border-radius: 1px;"></div>
+                    <div style="width: 1px; height: 12px; background: #25d366;"></div>
+                </div>
+                <!-- Candlestick 5 -->
+                <div style="width: 14px; position: relative; height: 60px; margin-bottom: 30px; display: flex; flex-direction: column; align-items: center;">
+                    <div style="width: 1px; height: 18px; background: #ff4d4d;"></div>
+                    <div style="width: 100%; flex-grow: 1; background: #ff4d4d; border-radius: 1px;"></div>
+                    <div style="width: 1px; height: 22px; background: #ff4d4d;"></div>
+                </div>
+            </div>
+            
+            <!-- Immediate Live Execution Order Placement Interface Matrix -->
+            <div style="padding-top: 10px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                    <label style="font-size: 11px; font-family: monospace; color: #a3b8ad;">LOTS:</label>
+                    <input type="number" id="terminal-trade-volume" value="0.10" step="0.01" style="width: 70px; padding: 4px; background: #0d1411; border: 1px solid #1b4d3e; color: #e0e6e3; font-family: monospace; font-size: 12px;">
+                </div>
+                
+                <div style="display: flex; gap: 8px;">
+                    <button onclick="processTerminalOrder('BUY')" style="background: #25d366; color: #0a0f0d; font-weight: bold; border: none; padding: 6px 18px; font-size: 13px; border-radius: 4px; cursor: pointer; font-family: monospace;">BUY</button>
+                    <button onclick="processTerminalOrder('SELL')" style="background: #ff4d4d; color: #0a0f0d; font-weight: bold; border: none; padding: 6px 18px; font-size: 13px; border-radius: 4px; cursor: pointer; font-family: monospace;">SELL</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MetaTrader 5 (MT5) Replicated Workspace Footer Display Node -->
+        <div style="border: 1px solid #2e3b35; background: #0b0f0d; border-radius: 4px; font-family: monospace; overflow: hidden;">
+            <!-- MT5 Workspace Header Menu Tabs -->
+            <div style="background: #151f1a; border-bottom: 1px solid #2e3b35; display: flex; font-size: 11px; font-weight: bold; color: #a3b8ad;">
+                <div id="mt5-tab-trade" onclick="switchMt5Tab('trade')" style="padding: 6px 12px; cursor: pointer; background: #0b0f0d; color: #25d366; border-right: 1px solid #2e3b35;">Trade</div>
+                <div id="mt5-tab-history" onclick="switchMt5Tab('history')" style="padding: 6px 12px; cursor: pointer; border-right: 1px solid #2e3b35;">History</div>
+                <div id="mt5-tab-options" onclick="switchMt5Tab('options')" style="padding: 6px 12px; cursor: pointer; border-right: 1px solid #2e3b35;">Options</div>
+            </div>
+            
+            <!-- MT5 Tab Contents Frame Content View -->
+            <div style="padding: 8px; min-height: 85px; font-size: 11px; line-height: 1.4;">
+                <!-- Trade Panel View -->
+                <div id="mt5-view-trade">
+                    <table style="width: 100%; text-align: left; border-collapse: collapse; color: #e0e6e3;">
+                        <thead>
+                            <tr style="color: #668073; border-bottom: 1px solid #1b4d3e;">
+                                <th>Order ID</th>
+                                <th>Asset</th>
+                                <th>Type</th>
+                                <th>Volume</th>
+                                <th>Price</th>
+                                <th>Profit (KES)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mt5-active-orders-rows">
+                            <!-- Injected Dynamic Row Records -->
+                            <tr id="empty-mt5-row"><td colspan="6" style="color: #668073; padding: 10px 0; text-align: center;">// No running matrix exposure positions active.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- History Panel View -->
+                <div id="mt5-view-history" style="display: none;">
+                    <table style="width: 100%; text-align: left; border-collapse: collapse; color: #e0e6e3;">
+                        <thead>
+                            <tr style="color: #668073; border-bottom: 1px solid #1b4d3e;">
+                                <th>Order ID</th>
+                                <th>Asset</th>
+                                <th>Type</th>
+                                <th>Closed Price</th>
+                                <th>Profit Outcome</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mt5-history-rows">
+                            <tr style="border-bottom: 1px solid #0d1411;">
+                                <td>#849204</td>
+                                <td>XAUUSD</td>
+                                <td style="color:#25d366;">BUY</td>
+                                <td>2394.20</td>
+                                <td style="color:#25d366;">+1,240.00 KES</td>
+                            </tr>
+                            <tr>
+                                <td>#849171</td>
+                                <td>Volatility 75 Index</td>
+                                <td style="color:#ff4d4d;">SELL</td>
+                                <td>254410.15</td>
+                                <td style="color:#ff4d4d;">-450.00 KES</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Options Panel View -->
+                <div id="mt5-view-options" style="display: none; color: #a3b8ad;">
+                    <div>• Server Configuration Node: MT5-Terminal-Gateway-Cluster-04</div>
+                    <div>• Terminal Protocol State: Keep-Alive Handshake Synced</div>
+                    <div>• Margin Protection Ratio: 1500% Active Risk Guard</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ② Investment Chatters (Updated Tier Scale Pricing from 500 KES to 10,000 KES) -->
+    <div style="border:1px solid #1b4d3e; padding: 15px; margin-bottom: 25px; border-radius: 4px; background-color: #111a16;">
+        <h2 style="color: #52a3ff; font-family: 'Times New Roman', Times, serif; margin-top: 0; font-size: 18px;">② INVESTMENT CHATTERS (METALS MATRIX)</h2>
+        <p style="font-size: 13px; margin-bottom: 15px; color: #a3b8ad;">Review our revamped scale portfolio tiers. Select a box matrix below to load allocation inputs.</p>
+        
+        <!-- Adjusted Framework Grid Layout -->
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+            <div onclick="selectTier('tier1', 7, 500, 10, 'Bronze Allocation Portfolio')" id="box-tier1" style="border: 2px solid #25d366; padding: 12px; border-radius: 4px; cursor: pointer; background: #162e24;">
+                <strong style="color: #25d366; font-size: 14px;">Bronze Tier Framework — Entry Allocation: KES 500</strong>
+                <div style="font-size: 12px; margin-top: 3px; color: #e0e6e3;">Return window allocation structure settles in full over a <strong>7 Days</strong> period. Daily distributions compounded.</div>
+            </div>
+            <div onclick="selectTier('tier2', 14, 1000, 18, 'Silver Allocation Portfolio')" id="box-tier2" style="border: 1px solid #1b4d3e; padding: 12px; border-radius: 4px; cursor: pointer; background: #0d1411;">
+                <strong style="color: #e0e6e3; font-size: 14px;">Silver Tier Framework — Entry Allocation: KES 1,000</strong>
+                <div style="font-size: 12px; margin-top: 3px; color: #a3b8ad;">Return window allocation structure settles in full over a <strong>14 Days</strong> period. Scaled infrastructure mechanics.</div>
+            </div>
+            <div onclick="selectTier('tier3', 21, 5000, 35, 'Gold Allocation Portfolio')" id="box-tier3" style="border: 1px solid #1b4d3e; padding: 12px; border-radius: 4px; cursor: pointer; background: #0d1411;">
+                <strong style="color: #e0e6e3; font-size: 14px;">Gold Tier Framework — Entry Allocation: KES 5,000</strong>
+                <div style="font-size: 12px; margin-top: 3px; color: #a3b8ad;">Return window allocation structure settles in full over a <strong>21 Days</strong> period. Advanced institutional buffering.</div>
+            </div>
+            <div onclick="selectTier('tier4', 28, 10000, 55, 'Diamond Allocation Portfolio')" id="box-tier4" style="border: 1px solid #1b4d3e; padding: 12px; border-radius: 4px; cursor: pointer; background: #0d1411;">
+                <strong style="color: #e0e6e3; font-size: 14px;">Diamond Tier Framework — Entry Allocation: KES 10,000</strong>
+                <div style="font-size: 12px; margin-top: 3px; color: #a3b8ad;">Return window allocation structure settles in full over a <strong>28 Days</strong> period. Complete professional enterprise tracking.</div>
+            </div>
+        </div>
+
+        <input type="hidden" id="selected-tier-id" value="tier1">
+        <input type="hidden" id="expected-tier-amount" value="500">
+        <input type="hidden" id="selected-tier-name" value="Bronze Allocation Portfolio">
+        
+        <div style="background-color: #0d1411; padding: 12px; border: 1px solid #1b4d3e; border-radius: 4px; font-size: 13px; margin-bottom: 15px;">
+            <label style="font-weight: bold; display: block; margin-bottom: 4px; color: #e0e6e3;">Deposit Funding Amount (KES):</label>
+            <input type="number" id="deposit-amount" value="500" oninput="validateStrictAmount()" style="width: 95%; padding: 6px; font-size: 13px; border: 1px solid #1b4d3e; background-color: #111a16; color: #e0e6e3;">
+            <span id="amount-warning" style="font-size: 11px; color: #ff4d4d; display: none; margin-top: 2px;">Only the precise required tier allocation is acceptable.</span>
+            
+            <div style="background: #162e24; border: 1px dashed #25d366; padding: 10px; margin-top: 10px; border-radius: 4px;">
+                <div style="font-weight: bold; color: #25d366;" id="maturity-output">Projected Return Window: 7 Days Framework (Estimated Net Yield: ~10.00%)</div>
+                <div style="font-size: 11px; color: #a3b8ad; margin-top: 2px;">[No Loss Framework Active & Guarding Capital Structure]</div>
+            </div>
+        </div>
+
+        <!-- STK Push Section Just Below Trade Allocation -->
+        <div style="background-color: #0d1411; border: 2px solid #25d366; padding: 12px; border-radius: 4px; font-size: 13px;">
+            <span style="font-weight: bold; color: #e0e6e3; display: block; margin-bottom: 8px;">💸 Trade Infrastructure Checkout Gateway</span>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
+                <input type="tel" id="phone-number-trade" placeholder="Enter Safaricom number (e.g., 0712345678)" style="flex: 1; min-width: 180px; padding: 6px; border: 1px solid #1b4d3e; background: #111a16; color: #e0e6e3; font-size: 13px;">
+                <button onclick="triggerStkPush('trade')" style="background: #25d366; color: #0a0f0d; font-weight: bold; border: none; padding: 6px 14px; cursor: pointer; border-radius: 4px; font-size: 13px;">
+                    Send STK Push
+                </button>
+            </div>
+            <p style="font-size: 11px; color: #a3b8ad; margin: 0;">
+                Processing Routes: Paybill <strong>247247</strong> | Account Number: <strong>0190187302651</strong>.
+            </p>
+        </div>
+    </div>
+
+    <!-- ③ Automated Bots & Broker Portal Linkage Links -->
+    <div style="border: 1px solid #1b4d3e; padding: 15px; margin-bottom: 25px; border-radius: 4px; background-color: #111a16;">
+        <h2 style="color: #52a3ff; font-family: 'Times New Roman', Times, serif; margin-top: 0; font-size: 18px;">③ AUTOMATED BOTS & BROKER CHANNELS</h2>
+        <p style="font-size: 13px; color: #a3b8ad;">Deploy production-level extraction scripts or connect direct execution nodes to tracking portals.</p>
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+            <a href="https://deriv.partners/rx?sidc=160E17BE-3F89-42EF-AF54-2C8C420654B6&utm_campaign=dynamicworks&utm_medium=affiliate&utm_source=CU35656" target="_blank" style="display: block; text-decoration: none; color: #e0e6e3; background-color: #0d1411; border: 2px solid #1b4d3e; padding: 8px; font-weight: bold; font-size: 13px;">
+                🤖 Deploy Volatility Index Bots (Deriv Tracking Portal)
+            </a>
+            <a href="https://my.anzocapital.com/register?r_code=IB03546421A" target="_blank" style="display: block; text-decoration: none; color: #e0e6e3; background-color: #0d1411; border: 2px solid #1b4d3e; padding: 8px; font-weight: bold; font-size: 13px;">
+                📈 Access Live Forex Markets (Anzo Capital IB Portal)
+            </a>
+        </div>
+    </div>
+
+    <!-- ④ Academy Strategy Store & DRM Shielding -->
+    <div style="border: 1px solid #1b4d3e; padding: 15px; margin-bottom: 25px; border-radius: 4px; background-color: #111a16;">
+        <h2 style="color: #52a3ff; font-family: 'Times New Roman', Times, serif; margin-top: 0; font-size: 18px;">④ ACADEMY STORE & RESOURCE VAULT</h2>
+        <p style="font-size: 13px; margin-bottom: 12px; color: #a3b8ad;">Purchase technical manuals or secure online class registrations instantly.</p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 15px;">
+            <div style="background: #0d1411; border: 1px solid #1b4d3e; padding: 10px; border-radius: 4px; text-align: center;">
+                <strong style="font-size: 13px; display: block; color: #e0e6e3;">Premium Strategy Blueprint (PDF)</strong>
+                <span style="font-size: 12px; color: #25d366; font-weight: bold; display: block; margin: 4px 0;">KES 2,500</span>
+                <button onclick="selectAcademyItem('Premium Strategy Blueprint', 2500)" style="background: transparent; border: 1px solid #e0e6e3; color: #e0e6e3; font-size: 11px; padding: 4px 8px; cursor: pointer;">Select Manual</button>
+            </div>
+            <div style="background: #0d1411; border: 1px solid #1b4d3e; padding: 10px; border-radius: 4px; text-align: center;">
+                <strong style="font-size: 13px; display: block; color: #e0e6e3;">Advanced Class Registration</strong>
+                <span style="font-size: 12px; color: #25d366; font-weight: bold; display: block; margin: 4px 0;">KES 4,000</span>
+                <button onclick="selectAcademyItem('Advanced Class Registration', 4000)" style="background: transparent; border: 1px solid #e0e6e3; color: #e0e6e3; font-size: 11px; padding: 4px 8px; cursor: pointer;">Select Registration</button>
+            </div>
+        </div>
+
+        <div style="background-color: #0d1411; border: 2px solid #52a3ff; padding: 12px; border-radius: 4px; font-size: 13px;">
+            <span style="font-weight: bold; color: #e0e6e3; display: block; margin-bottom: 4px;">¼ Academy Resource Checkout Gateway</span>
+            <div style="font-size: 12px; color: #52a3ff; font-weight: bold; margin-bottom: 8px;" id="academy-item-display">Selected: None</div>
+            
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
+                <input type="tel" id="phone-number-academy" placeholder="Enter Safaricom number (e.g., 0712345678)" style="flex: 1; min-width: 180px; padding: 6px; border: 1px solid #1b4d3e; background: #111a16; color: #e0e6e3; font-size: 13px;">
+                <button onclick="triggerStkPush('academy')" style="background: #52a3ff; color: #0a0f0d; font-weight: bold; border: none; padding: 6px 14px; cursor: pointer; border-radius: 4px; font-size: 13px;">
+                    Send STK Push
+                </button>
+            </div>
+            <p style="font-size: 11px; color: #a3b8ad; margin: 0;">
+                Processing Routes: Paybill <strong>247247</strong> | Account Number: <strong>0190187302651</strong>.
+            </p>
+        </div>
+
+        <div style="margin-top: 15px; border-top: 1px solid #1b4d3e; padding-top: 10px; font-size: 11px; text-align: center; color: #a3b8ad;">
+            🔒 All media assets run Payment-Before-Viewing scripts. Built-in DRM shields fully prevent screenshot capture or file download sharing.
+        </div>
+    </div>
+
+    <!-- Administrative Restricted Authentication Portal -->
+    <div style="border: 2px dashed #ff4d4d; padding: 15px; border-radius: 4px; background-color: #1a0d0d; margin-top: 40px;">
+        <h3 style="color: #ff4d4d; margin-top: 0; font-size: 15px; font-family: monospace;">🔒 SECURE SYSTEM ADMINISTRATION PORTAL</h3>
+        
+        <div id="admin-login-node">
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <input type="password" id="admin-pass-key" placeholder="Enter Secret Admin Passkey" style="padding: 6px; border: 1px solid #ff4d4d; background: #111a16; color: #e0e6e3; font-size: 13px; flex: 1; min-width: 200px;">
+                <button onclick="authenticateAdminSystem()" style="background: #ff4d4d; color: #0a0f0d; font-weight: bold; border: none; padding: 6px 14px; cursor: pointer; font-size: 13px; border-radius: 4px;">
+                    Login to System
+                </button>
+            </div>
+        </div>
+
+        <div id="admin-dashboard-node" style="display: none;">
+            <div style="background: #25d366; color: #0a0f0d; padding: 6px 10px; font-weight: bold; font-size: 12px; border-radius: 4px; margin-bottom: 12px; display: inline-block;">
+                ✔ System Core Access Granted: Master Admin Active
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Interactive Execution Logic -->
+    <script>
+        // Memory Architecture Data Models
+        const accountWorkspaceBalances = {
+            'local-demo': 10000.00,
+            'deriv-demo': 0.00,
+            'deriv-live': 0.00,
+            'anzo-demo': 0.00,
+            'anzo-live': 0.00
+        };
+
+        const linkedBrokerStatus = {
+            'Deriv': { linked: false, email: '' },
+            'Anzo Capital': { linked: false, email: '' }
+        };
+
+        let currentActiveTargetBroker = "";
+        let selectedAcademyPrice = 0;
+        let selectedAcademyName = "";
+        let activeAssetPair = "Volatility 75 Index";
+        let trackingOrderIdCounter = 948210;
+
+        // Workspace Selection Engine Routing Changes
+        function switchAccountWorkspace() {
+            const selector = document.getElementById('account-selector');
+            const selectedVal = selector.value;
+            
+            const nameDisplay = document.getElementById('display-workspace-name');
+            const balanceDisplay = document.getElementById('display-workspace-balance');
+            
+            // Check if selected target requires outside live linked permission authentication
+            if (selectedVal.startsWith('deriv-') && !linkedBrokerStatus['Deriv'].linked) {
+                alert("Access Restricted: Please link your Deriv workspace first via the permission gateway below.");
+                selector.value = "local-demo";
+                return;
+            }
+            if (selectedVal.startsWith('anzo-') && !linkedBrokerStatus['Anzo Capital'].linked) {
+                alert("Access Restricted: Please link your Anzo Capital workspace first via the permission gateway below.");
+                selector.value = "local-demo";
+                return;
+            }
+
+            // Map friendly names
+            const mapNames = {
+                'local-demo': 'Local Demo Account',
+                'deriv-demo': 'Deriv Demo Account (API Live Edge)',
+                'deriv-live': 'Deriv Live Account (Production Execution Server)',
+                'anzo-demo': 'Anzo Capital Demo Account (API Live Edge)',
+                'anzo-live': 'Anzo Capital Live Account (Production Execution Server)'
+            };
+
+            nameDisplay.innerHTML = mapNames[selectedVal];
+            balanceDisplay.innerHTML = accountWorkspaceBalances[selectedVal].toLocaleString('en-US', {minimumFractionDigits: 2}) + " KES";
+            
+            // Re-render empty placeholder clean up logic if switching workspaces
+            document.getElementById('mt5-active-orders-rows').innerHTML = `<tr id="empty-mt5-row"><td colspan="6" style="color: #668073; padding: 10px 0; text-align: center;">// Workspace altered. Waiting for live orders on ${mapNames[selectedVal]}.</td></tr>`;
+        }
+
+        // Open O-Auth Permission Request Box Module
+        function openLinkAuthModal(broker) {
+            currentActiveTargetBroker = broker;
+            document.getElementById('auth-modal-title').innerHTML = `LINK ${broker.toUpperCase()} INTERFACE PERMISSION`;
+            document.getElementById('auth-broker-email').value = "";
+            document.getElementById('auth-broker-pass').value = "";
+            document.getElementById('auth-modal-node').style.display = "flex";
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal-node').style.display = "none";
+        }
+
+        // Validation & Core Account Linking Action
+        function submitAuthIntegration() {
+            const email = document.getElementById('auth-broker-email').value.trim();
+            const pass = document.getElementById('auth-broker-pass').value;
+
+            if(!email || !pass) {
+                alert("Please provide both matching registration email and system token access credentials.");
+                return;
+            }
+
+            // Bind values to state
+            linkedBrokerStatus[currentActiveTargetBroker].linked = true;
+            linkedBrokerStatus[currentActiveTargetBroker].email = email;
+
+            // Seed initial dynamic simulation account values upon linking authorization approval
+            if(currentActiveTargetBroker === 'Deriv') {
+                accountWorkspaceBalances['deriv-demo'] = 150000.00;
+                accountWorkspaceBalances['deriv-live'] = 12500.00;
+            } else {
+                accountWorkspaceBalances['anzo-demo'] = 500000.00;
+                accountWorkspaceBalances['anzo-live'] = 8900.00;
+            }
+
+            // Update UI status metrics frame
+            document.getElementById('broker-permission-status').innerHTML = `✔ Linked account successfully: ${currentActiveTargetBroker} Verified Profile (${email}). Integration nodes primed.`;
+            closeAuthModal();
+            
+            alert(`Permission Handshake Successful!\nYour website now has transaction execution permission access to your ${currentActiveTargetBroker} dashboard.`);
+        }
+
+        // Synchronization logic for scanning coordinates
+        function syncTerminalAsset() {
+            const asset = document.getElementById('scanner-asset').value;
+            const title = document.getElementById('chart-title-asset');
+            const mapTitle = {
+                'deriv': 'CHART FEED: Volatility 75 Index',
+                'forex': 'CHART FEED: EURUSD Currency Block',
+                'crypto': 'CHART FEED: BTCUSD Digital Assets',
+                'metals': 'CHART FEED: XAUUSD Spot Gold Matrix'
+            };
+            title.innerHTML = mapTitle[asset] + " (" + document.getElementById('scanner-timeframe').value + ")";
+            activeAssetPair = asset === "deriv" ? "Volatility 75 Index" : asset === "forex" ? "EURUSD" : asset === "crypto" ? "BTCUSD" : "XAUUSD";
+        }
+
+        function runAiScanner() {
+            syncTerminalAsset();
+            const asset = document.getElementById('scanner-asset').value;
+            const display = document.getElementById('scanner-display');
+            display.innerHTML = "// Parsing structural gap patterns across running server intervals... Matrix calculations synchronized below.";
+        }
+
+        // Unified Order Processing Engine (Detects current selected Account Hub workspace parameters dynamically)
+        function processTerminalOrder(side) {
+            const currentWorkspace = document.getElementById('account-selector').value;
+            const lotVolume = parseFloat(document.getElementById('terminal-trade-volume').value);
+
+            if(isNaN(lotVolume) || lotVolume <= 0) {
+                alert("Invalid trading footprint volume structure declared.");
+                return;
+            }
+
+            // Determine workspace rules
+            const isLive = currentWorkspace.endsWith('-live');
+            const workspaceBalance = accountWorkspaceBalances[currentWorkspace];
+
+            if(workspaceBalance <= 0) {
+                alert("Transaction Blocked: Insufficient liquidity margin buffers inside this chosen account workspace block.");
+                return;
+            }
+
+            // Clean empty placeholder state rows if present
+            const emptyRow = document.getElementById('empty-mt5-row');
+            if(emptyRow) { emptyRow.remove(); }
+
+            trackingOrderIdCounter++;
+            const newRowId = `order-${trackingOrderIdCounter}`;
+
+            // Create simulated floating profit/loss performance string metrics
+            const simulatedFloatingPnl = (Math.random() > 0.4 ? 1 : -1) * Math.floor(Math.random() * 250 + 50) * lotVolume;
+            const colorPnl = simulatedFloatingPnl >= 0 ? "#25d366" : "#ff4d4d";
+
+            const tableRows = document.getElementById('mt5-active-orders-rows');
+            const orderHtmlRow = `
+                <tr id="${newRowId}" style="border-bottom: 1px solid #1b4d3e;">
+                    <td>#${trackingOrderIdCounter}</td>
+                    <td>${activeAssetPair}</td>
+                    <td style="color:${side === 'BUY' ? '#25d366' : '#ff4d4d'}; font-weight:bold;">${side}</td>
+                    <td>${lotVolume.toFixed(2)}</td>
+                    <td>${(Math.random()*100 + 1200).toFixed(2)}</td>
+                    <td style="color:${colorPnl}; font-weight:bold;">${simulatedFloatingPnl >= 0 ? '+' : ''}${simulatedFloatingPnl.toFixed(2)}</td>
+                </tr>
+            `;
+
+            tableRows.insertAdjacentHTML('beforeend', orderHtmlRow);
+
+            // Execute dynamic warning popups tracking live external broker deployment parameters
+            if (isLive) {
+                alert(`🚀 LIVE BROKER ORDER SENT!\nExecuting structural processing payload directly to your linked ${currentWorkspace.includes('deriv') ? 'Deriv' : 'Anzo Capital'} production server environment.\nDirection Matrix: ${side} ${lotVolume} Lots.`);
+            } else {
+                alert(`✔ Practice Order Placed:\nSimulating matching execution protocols inside sandbox workspace pipeline.`);
+            }
+        }
+
+        // MT5 Navigation Workspace View Switcher Tab Controls
+        function switchMt5Tab(tabId) {
+            const tabs = ['trade', 'history', 'options'];
+            tabs.forEach(t => {
+                const node = document.getElementById(`mt5-tab-${t}`);
+                const view = document.getElementById(`mt5-view-${t}`);
+                if(t === tabId) {
+                    node.style.background = "#0b0f0d";
+                    node.style.color = "#25d366";
+                    view.style.display = "block";
+                } else {
+                    node.style.background = "transparent";
+                    node.style.color = "#a3b8ad";
+                    view.style.display = "none";
+                }
+            });
+        }
+
+        // Investment Chatters Fixed Scalar Values Configurator Functions
+        function selectTier(tierId, days, baseAmountKsh, returnPercentage, formalName) {
+            for(let i=1; i<=4; i++) {
+                let box = document.getElementById('box-tier' + i);
+                box.style.border = "1px solid #1b4d3e";
+                box.style.background = "#0d1411";
+                box.getElementsByTagName('strong')[0].style.color = "#e0e6e3";
+            }
+            let selectedBox = document.getElementById('box-' + tierId);
+            selectedBox.style.border = "2px solid #25d366";
+            selectedBox.style.background = "#162e24";
+            selectedBox.getElementsByTagName('strong')[0].style.color = "#25d366";
+            
+            document.getElementById('selected-tier-id').value = tierId;
+            document.getElementById('expected-tier-amount').value = baseAmountKsh;
+            document.getElementById('selected-tier-name').value = formalName;
+            
+            let depositInput = document.getElementById('deposit-amount');
+            depositInput.value = baseAmountKsh;
+            
+            document.getElementById('amount-warning').style.display = "none";
+            document.getElementById('maturity-output').innerHTML = "Projected Return Window: " + days + " Days Framework (Estimated Net Yield: ~" + returnPercentage.toFixed(2) + "%)";
+        }
+
+        function validateStrictAmount() {
+            const expected = parseInt(document.getElementById('expected-tier-amount').value);
+            const inputField = document.getElementById('deposit-amount');
+            const warning = document.getElementById('amount-warning');
+            
+            if (parseInt(inputField.value) !== expected) {
+                warning.style.display = "block";
+            } else {
+                warning.style.display = "none";
+            }
+        }
+
+        function selectAcademyItem(itemName, price) {
+            selectedAcademyName = itemName;
+            selectedAcademyPrice = price;
+            document.getElementById('academy-item-display').innerHTML = "Selected: " + itemName + " (KES " + price.toLocaleString() + ")";
+        }
+
+        function triggerStkPush(context) {
+            if (context === 'trade') {
+                const phone = document.getElementById('phone-number-trade').value.trim();
+                const actual = parseInt(document.getElementById('deposit-amount').value);
+                if (!phone) { alert("Please provide a valid phone number."); return; }
+                alert("STK Push Requested: Processing Route 247247 tracking token targeting KES " + actual.toLocaleString());
+            } else if (context === 'academy') {
+                const phone = document.getElementById('phone-number-academy').value.trim();
+                if (!phone || selectedAcademyPrice === 0) { alert("Configure selection parameters correctly first."); return; }
+                alert("Academy STK Push Dispatched: KES " + selectedAcademyPrice);
+            }
+        }
+
+        function triggerWithdrawalPrompt() {
+            let userWallet = prompt("Enter mobile wallet number or banking settlement path:");
+            if(userWallet) {
+                let amount = prompt("Specify payout volume quantity (KES):");
+                if(amount) alert("Withdrawal payload queued for verification routing.");
+            }
+        }
+
+        function authenticateAdminSystem() {
+            const passKey = document.getElementById('admin-pass-key').value;
+            if (passKey === "admin123" || passKey === "root") {
+                document.getElementById('admin-login-node').style.display = "none";
+                document.getElementById('admin-dashboard-node').style.display = "block";
+            } else {
+                alert("Access denied.");
+            }
+        }
+    </script>
+</body>
+</html>
